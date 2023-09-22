@@ -3,7 +3,7 @@ namespace HouseFromJack
 {
     internal class Part1
     {
-        public ImmutableArray<string> Poem { get; set; }
+        public ImmutableArray<string> Poem { get; private set; }
 
         public Part1()
         {
@@ -12,7 +12,7 @@ namespace HouseFromJack
 
         public void AddPart()
         {
-          Poem = Poem.Add("Вот дом,\r\nКоторый построил Джек.\n");
+            Poem = Poem.Add("Вот дом,\r\nКоторый построил Джек.\n");
         }
     }
 }

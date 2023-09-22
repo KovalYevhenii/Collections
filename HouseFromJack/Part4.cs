@@ -3,7 +3,7 @@ namespace HouseFromJack
 {
     internal class Part4
     {
-        public ImmutableArray<string> Poem { get; set; }
+        public ImmutableArray<string> Poem { get; private set; }
         public Part4()
         {
             this.Poem = ImmutableArray<string>.Empty;
