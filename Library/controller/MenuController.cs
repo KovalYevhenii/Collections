@@ -13,6 +13,7 @@ namespace ConDicLibrary.controller
             Menu menu = new();
             _menu = menu;
         }
+        
         public void Start()
         {
             while (true)
