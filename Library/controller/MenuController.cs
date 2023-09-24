@@ -15,46 +15,44 @@ namespace ConDicLibrary.controller
         }
         public void Start()
         {
+            while (true)
             {
-                while (true)
-                {
-                    _menu.StartMenu();
-                    var input = Console.ReadLine();
+                _menu.StartMenu();
+                var input = Console.ReadLine();
 
-                    if (int.TryParse(input, out int res))
+                if (int.TryParse(input, out int res))
+                {
+                    switch (res)
                     {
-                        switch (res)
-                        {
-                            case 1:
-                                {
-                                    _menu.SetMenuState(MenuState.AddBook);
-                                    var bookName = _menu.First();
-                                    _library.AddBook(bookName);
-                                    break;
-                                }
-                            case 2:
-                                {
-                                    _menu.SetMenuState(MenuState.UnreadedBook);
-                                    _menu.Second();
-                                    _library.ShowAllBooks();
-                                    break;
-                                }
-                            case 3:
-                                {
-                                    _menu.SetMenuState(MenuState.Exit);
-                                    _menu.Close();
-                                    Environment.Exit(0);
-                                    break;
-                                }
-                            default:
-                                _menu.StartMenu();
+                        case 1:
+                            {
+                                _menu.SetMenuState(MenuState.AddBook);
+                                var bookName = _menu.First();
+                                _library.AddBook(bookName);
                                 break;
-                        }
+                            }
+                        case 2:
+                            {
+                                _menu.SetMenuState(MenuState.UnreadedBook);
+                                _menu.Second();
+                                _library.ShowAllBooks();
+                                break;
+                            }
+                        case 3:
+                            {
+                                _menu.SetMenuState(MenuState.Exit);
+                                _menu.Close();
+                                Environment.Exit(0);
+                                break;
+                            }
+                        default:
+                            _menu.StartMenu();
+                            break;
                     }
-                    else
-                    {
-                        Console.WriteLine("Incorrect input");
-                    }
+                }
+                else
+                {
+                    Console.WriteLine("Incorrect input");
                 }
             }
         }
