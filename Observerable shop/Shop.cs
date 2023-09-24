@@ -8,6 +8,7 @@ namespace CollectionsPractice
         {
             ItemsObservable = new ObservableCollection<Item>();
         }
+        
         public void Add(int itemId, string itemName)
         {
             Item item = new()
@@ -18,6 +19,7 @@ namespace CollectionsPractice
 
             ItemsObservable.Add(item);
         }
+        
         public void Remove(int itemId)
         {
             var itemToRemove = ItemsObservable.FirstOrDefault(x => x.Id == itemId);
