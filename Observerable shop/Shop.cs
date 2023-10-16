@@ -1,37 +1,36 @@
 ﻿using System.Collections.ObjectModel;
-namespace CollectionsPractice
+
+namespace CollectionsPractice;
+
+public class Shop
 {
-    public class Shop
+    private ObservableCollection<Item> ItemsObservable { get;}
+    public Shop()
     {
-        public ObservableCollection<Item> ItemsObservable { get; }
-        public Shop()
+        ItemsObservable = new ObservableCollection<Item>();
+        ItemsObservable.CollectionChanged += Customer.OnItemChanged;
+    }
+    public void Add(int itemId, string itemName)
+    {
+        Item item = new()
         {
-            ItemsObservable = new ObservableCollection<Item>();
-        }
-        
-        public void Add(int itemId, string itemName)
-        {
-            Item item = new()
-            {
-                Id = itemId,
-                Name = itemName
-            };
+            Id = itemId,
+            Name = itemName
+        };
+        ItemsObservable.Add(item);
+    }
+    
+    public void Remove(int itemId)
+    {
+        var itemToRemove = ItemsObservable.FirstOrDefault(x => x.Id == itemId);
 
-            ItemsObservable.Add(item);
-        }
-        
-        public void Remove(int itemId)
+        if (itemToRemove != null)
         {
-            var itemToRemove = ItemsObservable.FirstOrDefault(x => x.Id == itemId);
-
-            if (itemToRemove != null)
-            {
-                ItemsObservable.Remove(itemToRemove);
-            }
-            else
-            {
-                Console.WriteLine($"Item with ID {itemId} not found.");
-            }
+            ItemsObservable.Remove(itemToRemove);
+        }
+        else
+        {
+            Console.WriteLine($"Item with ID {itemId} not found.");
         }
     }
 }

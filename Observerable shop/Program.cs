@@ -1,12 +1,12 @@
-﻿namespace CollectionsPractice
+﻿using System.Collections.Specialized;
+
+namespace CollectionsPractice
 {
     class Program
     {
         static void Main(string[] args)
         {
             Shop shop = new();
-            Customer customer = new();
-            shop.ItemsObservable.CollectionChanged += customer.OnItemChanged;
 
             while (true)
             {
@@ -34,7 +34,6 @@
                         {
                             Console.WriteLine("Enter valid number");
                         }
-
                         break;
 
                     case "D":
