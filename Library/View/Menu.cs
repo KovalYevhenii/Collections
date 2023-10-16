@@ -40,6 +40,5 @@
         {
             Console.WriteLine("Closing programm...");
         }
-
     }
 }
