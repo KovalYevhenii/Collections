@@ -1,53 +1,61 @@
 ﻿
 using System.Collections.Concurrent;
-
-namespace ConDicLibrary.controller
+namespace ConDicLibrary.controller;
+public class Library
 {
-    public class Library
+    private readonly int defaultReadProgress = 0;
+    private readonly ConcurrentDictionary<string, int> myBooks = new();
+    private readonly Thread trackingReadProgressThread;
+    public Library()
     {
-        private readonly ConcurrentDictionary<string, int> myBooks = new();
-
-        public void AddBook(string bookName)
+        trackingReadProgressThread = new(CountReadPercent);
+        trackingReadProgressThread.Start();
+    }
+    public void AddBook(string bookName)
+    {
+        if (bookName != null)
         {
-            if (bookName != null)
+            if (myBooks.ContainsKey(bookName))
             {
-                if (myBooks.ContainsKey(bookName))
-                {
-                    Console.WriteLine("book with the same name already exist!");
-                    return;
-                }
-
-                Thread thread = new(() => CountReadPercent(bookName));
-                thread.Start();
+                Console.WriteLine("book with the same name already exist!");
+                return;
             }
-            else throw new ArgumentNullException(nameof(bookName));
-        }
-
-        private void CountReadPercent(string bookName)
-        {
-            for (int readPercent = 0; readPercent <= 100; readPercent++)
+            else
             {
-                myBooks[bookName] = readPercent;
-
-                if (readPercent == 100)
+                myBooks.TryAdd(bookName, defaultReadProgress);
+            }
+        }
+        else throw new ArgumentNullException(nameof(bookName));
+    }
+    private void CountReadPercent()
+    {
+        int maxReadPercent = 100;
+        while (true)
+        {
+            foreach (var bookName in myBooks.Keys)
+            {
+                if (myBooks[bookName] < maxReadPercent)
+                {
+                    myBooks[bookName] += 1;
+                }
+                else
                 {
                     RemoveBook(bookName);
                 }
-
-                Thread.Sleep(1000);
             }
+            Thread.Sleep(1000);
         }
+    }
 
-        public void ShowAllBooks()
+    public void ShowAllBooks()
+    {
+        foreach (var kvp in myBooks)
         {
-            foreach (var kvp in myBooks)
-            {
-                Console.WriteLine($"Book:[{kvp.Key}] read percent: {kvp.Value}%\n");
-            }
+            Console.WriteLine($"Book:[{kvp.Key}] read percent: {kvp.Value}%\n");
         }
-        private void RemoveBook(string bookName)
-        {
-            myBooks.TryRemove(bookName, out _);
-        }
+    }
+    private void RemoveBook(string bookName)
+    {
+        myBooks.TryRemove(bookName, out _);
     }
 }
