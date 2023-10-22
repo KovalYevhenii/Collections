@@ -1,13 +1,11 @@
 ﻿using ConDicLibrary.controller;
-namespace ConDicLibrary
+namespace ConDicLibrary;
+internal class Program
 {
-    internal class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            Library library = new Library();
-            MenuController controller = new(library);
-            controller.Start();            
-        }
+        Library library = new Library();
+        MenuController controller = new(library);
+        controller.Start();            
     }
 }
